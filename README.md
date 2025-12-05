@@ -38,3 +38,50 @@ ORM	mysql.connector
 Конфигурация	python-dotenv
 
 Работа с БД	MySQL Workbench (рекомендуется для визуального контроля)
+
+Инстукция
+
+Установка зависимостей
+
+Убедитесь, что у вас установлен Python 3.10+
+Установите необходимые пакеты:
+
+pip install mysql-connector-python python-dotenv
+
+Развёртывание базы данных
+
+Создайте БД в MySQL: CREATE DATABASE education_manager CHARACTER SET utf8mb4;
+
+Импортируйте дамп: mysql -u root -p education_manager < edu.sql
+
+Создайте файл .env
+
+Так как пароль к базе данных НЕ хранится в репозитории, нужно создать свой файл .env рядом с config.py.
+
+DB_HOST=127.0.0.1
+
+DB_USER=root
+
+DB_PASSWORD=ваш_пароль
+
+DB_NAME=education_manager
+
+Структура конфигурации
+
+config.py автоматически загружает .env
+
+from dotenv import load_dotenv
+
+import os
+
+load_dotenv()
+
+DB_CONFIG = {
+    'host': os.getenv("DB_HOST", "127.0.0.1"),
+    'user': os.getenv("DB_USER", "root"),
+    'password': os.getenv("DB_PASSWORD", ""),
+    'database': os.getenv("DB_NAME", "education_manager"),
+    'charset': 'utf8mb4'
+}
+Если .env нет — подключение НЕ сработает.
+Запуск программы
